@@ -126,7 +126,10 @@ namespace CareSpace.Backend.API
                 db.Database.Migrate();
             }
 
-            app.UseHttpsRedirection();
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseHttpsRedirection();
+            }
 
             app.UseAuthentication();
             app.UseAuthorization();
