@@ -1,0 +1,14 @@
+﻿using AutoMapper;
+using CareSpace.Backend.Contracts.DTOs.UpdateDTOs;
+using CareSpace.Backend.Domain.Entities;
+
+namespace CareSpace.Backend.Application.Common.Mappings.UpdatingDTOMappings
+{
+    public class TimeSlotUpdateMapping : Profile
+    {
+        public TimeSlotUpdateMapping()
+        {
+            CreateMap<UpdateTimeSlotDto, TimeSlot>();
+        }
+    }
+}
