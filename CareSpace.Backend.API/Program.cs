@@ -34,6 +34,20 @@ namespace CareSpace.Backend.API
             builder.Services.AddScoped<IAppointmentCompletionService, AppointmentCompletionService>();
             builder.Services.AddHostedService<AppointmentCompletionWorker>();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("FrontendPolicy", policy =>
+                {
+                    policy
+                        .WithOrigins(
+                            "http://localhost:5173",
+                            "https://localhost:5173"
+                        )
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+
             builder.Services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
@@ -114,6 +128,7 @@ namespace CareSpace.Backend.API
             var app = builder.Build();
 
             app.UseSwagger();
+
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "CareSpace API v1");
@@ -130,6 +145,8 @@ namespace CareSpace.Backend.API
             {
                 app.UseHttpsRedirection();
             }
+
+            app.UseCors("FrontendPolicy");
 
             app.UseAuthentication();
             app.UseAuthorization();
