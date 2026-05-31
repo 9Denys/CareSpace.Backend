@@ -30,6 +30,7 @@ namespace CareSpace.Backend.Application.Services.ServiceSchedule.Queries
                 .Include(ss => ss.Service)
                 .Include(ss => ss.Slot)
                 .Include(ss => ss.Centre)
+                .Where(ss => ss.Slot.IsAvailable)
                 .AsNoTracking()
                 .ToListAsync(cancellationToken);
 
