@@ -41,7 +41,8 @@ namespace CareSpace.Backend.API
                     policy
                         .WithOrigins(
                             "http://localhost:5173",
-                            "https://localhost:5173"
+                            "https://localhost:5173",
+                            "https://carespace-frontend.onrender.com"
                         )
                         .AllowAnyHeader()
                         .AllowAnyMethod();
