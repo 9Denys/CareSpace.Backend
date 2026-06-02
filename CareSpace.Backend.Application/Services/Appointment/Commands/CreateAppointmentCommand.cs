@@ -84,7 +84,7 @@ namespace CareSpace.Backend.Application.Services.Appointment.Commands
                 CreatedAt = DateTime.UtcNow
             };
 
-            schedule.Slot.IsAvailable = false;
+            
             await _context.Appointments.AddAsync(appointment, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
 
