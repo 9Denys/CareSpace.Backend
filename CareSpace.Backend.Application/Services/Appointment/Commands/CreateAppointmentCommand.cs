@@ -61,9 +61,7 @@ namespace CareSpace.Backend.Application.Services.Appointment.Commands
             if (!schedule.Slot.IsAvailable)
                 throw new Exception("This time slot is not available");
 
-            var slotDateTime = schedule.Slot.Date.ToDateTime(schedule.Slot.StartTime);
-
-            if (slotDateTime <= DateTime.UtcNow)
+            if (schedule.Slot.StartDateTimeUtc <= DateTime.UtcNow)
                 throw new Exception("Cannot book appointment for past time slot");
 
             var alreadyBooked = await _context.Appointments

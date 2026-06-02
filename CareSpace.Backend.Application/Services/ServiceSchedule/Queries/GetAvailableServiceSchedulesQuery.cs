@@ -51,7 +51,7 @@ namespace CareSpace.Backend.Application.Services.ServiceSchedule.Queries
                     ss.CentreId == request.CentreId &&
                     ss.Slot.Date == request.Date &&
                     ss.Slot.IsAvailable &&
-                    ss.Slot.Date.ToDateTime(ss.Slot.StartTime) > now &&
+                    ss.Slot.StartDateTimeUtc > now &&
                     !ss.Appointments.Any(a =>
                         a.Status == AppointmentStatus.Booked))
                 .AsNoTracking()

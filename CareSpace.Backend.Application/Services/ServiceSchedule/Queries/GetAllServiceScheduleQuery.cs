@@ -34,7 +34,7 @@ namespace CareSpace.Backend.Application.Services.ServiceSchedule.Queries
                 .Include(ss => ss.Centre)
                 .Where(ss =>
                     ss.Slot.IsAvailable &&
-                    ss.Slot.Date.ToDateTime(ss.Slot.StartTime) > now)
+                    ss.Slot.StartDateTimeUtc > now)
                 .AsNoTracking()
                 .ToListAsync(cancellationToken);
 

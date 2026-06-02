@@ -29,8 +29,7 @@ namespace CareSpace.Backend.Application.Services.TimeSlot.Queries
             var now = DateTime.UtcNow;
 
             var timeSlots = await _context.TimeSlots
-                .Where(ts =>
-                    ts.Date.ToDateTime(ts.StartTime) > now)
+                .Where(ts => ts.StartDateTimeUtc > now)
                 .AsNoTracking()
                 .ToListAsync(cancellationToken);
 
