@@ -23,14 +23,18 @@ namespace CareSpace.Backend.Application.Services.ServiceSchedule.Queries
         }
 
         public async Task<List<ServiceScheduleDto>> Handle(
-            GetAllServiceScheduleQuery request,
-            CancellationToken cancellationToken)
+        GetAllServiceScheduleQuery request,
+        CancellationToken cancellationToken)
         {
+            var now = DateTime.UtcNow;
+
             var schedules = await _context.ServiceSchedules
                 .Include(ss => ss.Service)
                 .Include(ss => ss.Slot)
                 .Include(ss => ss.Centre)
-                .Where(ss => ss.Slot.IsAvailable)
+                .Where(ss =>
+                    ss.Slot.IsAvailable &&
+                    ss.Slot.Date.ToDateTime(ss.Slot.StartTime) > now)
                 .AsNoTracking()
                 .ToListAsync(cancellationToken);
 

@@ -23,10 +23,14 @@ namespace CareSpace.Backend.Application.Services.TimeSlot.Queries
         }
 
         public async Task<List<TimeSlotDto>> Handle(
-            GetAllTimeSlotQuery request,
-            CancellationToken cancellationToken)
+        GetAllTimeSlotQuery request,
+        CancellationToken cancellationToken)
         {
+            var now = DateTime.UtcNow;
+
             var timeSlots = await _context.TimeSlots
+                .Where(ts =>
+                    ts.Date.ToDateTime(ts.StartTime) > now)
                 .AsNoTracking()
                 .ToListAsync(cancellationToken);
 

@@ -39,6 +39,8 @@ namespace CareSpace.Backend.Application.Services.ServiceSchedule.Queries
             GetAvailableServiceSchedulesQuery request,
             CancellationToken cancellationToken)
         {
+            var now = DateTime.UtcNow;
+
             var schedules = await _context.ServiceSchedules
                 .Include(ss => ss.Service)
                 .Include(ss => ss.Slot)
@@ -49,6 +51,7 @@ namespace CareSpace.Backend.Application.Services.ServiceSchedule.Queries
                     ss.CentreId == request.CentreId &&
                     ss.Slot.Date == request.Date &&
                     ss.Slot.IsAvailable &&
+                    ss.Slot.Date.ToDateTime(ss.Slot.StartTime) > now &&
                     !ss.Appointments.Any(a =>
                         a.Status == AppointmentStatus.Booked))
                 .AsNoTracking()
