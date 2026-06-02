@@ -22,6 +22,24 @@ namespace CareSpace.Backend.API.Controllers
             return Ok(result);
         }
 
+        [HttpGet("available")]
+        [AllowAnonymous]
+        public async Task<ActionResult<List<ServiceScheduleDto>>> GetAvailable(
+            [FromQuery] Guid serviceId,
+            [FromQuery] Guid centreId,
+            [FromQuery] DateOnly date)
+        {
+            var query = new GetAvailableServiceSchedulesQuery(
+                serviceId,
+                centreId,
+                date
+            );
+
+            var result = await Mediator.Send(query);
+
+            return Ok(result);
+        }
+
         [HttpGet("{id}")]
         [AllowAnonymous]
         public async Task<ActionResult<ServiceScheduleDto>> GetById(Guid id)
